@@ -79,7 +79,7 @@ class OSADataset(Dataset):
         one_hot = np.zeros(len(self.df["Binary_Label"].unique()))
         try:
             x = io.imread(image_name)
-            #x = ((x - x.mean()) / x.std()).astype(np.uint8)
+            x = ((x - x.mean()) / x.std()).astype(np.uint8)
             if self.transform:
                 x = self.transform(x)
                 one_hot[y]=1.
@@ -137,7 +137,7 @@ trans = transforms.Compose([transforms.ToPILImage(),
                             transforms.ToTensor(),
                             #transforms.RandomRotation(degrees=90),
                             transforms.RandomHorizontalFlip(),
-                            #transforms.Normalize(mean=[0.5081083, 0.5081083, 0.5081083],std=[0.281246, 0.281246, 0.281246]),
+                            transforms.Normalize(mean=[0.5081083, 0.5081083, 0.5081083],std=[0.281246, 0.281246, 0.281246]),
                            ])
 
 datagen = {key: OSADataset(df=value.copy(), transform=trans, mode=key) for key, value in df.items()}
